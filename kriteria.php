@@ -1,5 +1,5 @@
 <?php
- $q
+$q = isset($_GET['q']) ? $_GET['q'] : '';
 ?>
 
 <div class="page-header">
@@ -11,7 +11,7 @@
             <input type="hidden" name="m" value="kriteria" />
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="Pencarian. . ." name="q"
-                    value="<?= $_GET['q'] ?>" />
+                    value="<?= isset($_GET['q']) ? htmlspecialchars($_GET['q'], ENT_QUOTES) : '' ?>" />
             </div>
             <div class="form-group">
                 <button class="btn btn-success"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
@@ -21,8 +21,9 @@
                     Tambah</a>
             </div>
             <div class="form-group">
-                <a class="btn btn-default" href="cetak.php?m=kriteria&a=<?= $_GET['q'] ?>" target="_blank"><span
-                        class="glyphicon glyphicon-print"></span> Cetak</a>
+                <a class="btn btn-default"
+                    href="cetak.php?m=kriteria&a=<?= isset($_GET['q']) ? htmlspecialchars($_GET['q'], ENT_QUOTES) : '' ?>"
+                    target="_blank"><span class="glyphicon glyphicon-print"></span> Cetak</a>
             </div>
         </form>
     </div>
