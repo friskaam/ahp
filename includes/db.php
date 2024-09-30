@@ -42,4 +42,9 @@ class DB
         $row = mysqli_fetch_row($query);
         return $row[0];
     }
+
+    public function escape_string($string)
+    {
+        return mysqli_real_escape_string($this->conn, $string);
+    }
 }
