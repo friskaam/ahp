@@ -1,10 +1,14 @@
 <div class="page-header">
-    <center><h1>Perhitungan & Perangkingan</h1></center>
+    <center>
+        <h1>Perhitungan & Perangkingan</h1>
+    </center>
 </div>
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <center><h3 class="panel-title">Hasil Analisa</h3></center>
+        <center>
+            <h3 class="panel-title">Hasil Analisa</h3>
+        </center>
     </div>
     <div class="table-responsive">
         <table class="table table-bordered table-hover table-striped">
@@ -13,20 +17,20 @@
                     <th>Kode</th>
                     <th>Nama Alternatif</th>
                     <?php foreach ($KRITERIA as $key => $val) : ?>
-                        <th><?= $val ?></th>
+                    <th><?= $val ?></th>
                     <?php endforeach ?>
                 </tr>
             </thead>
             <?php
             $data = get_rel_alternatif();
             foreach ($data as $key => $val) : ?>
-                <tr>
-                    <td><?= $key ?></td>
-                    <td><?= $ALTERNATIF[$key] ?></td>
-                    <?php foreach ($val as $k => $v) : ?>
-                        <td><?= $SUB[$v]['nama'] ?></td>
-                    <?php endforeach ?>
-                </tr>
+            <tr>
+                <td><?= $key ?></td>
+                <td><?= $ALTERNATIF[$key] ?></td>
+                <?php foreach ($val as $k => $v) : ?>
+                <td><?= $SUB[$v]['nama'] ?></td>
+                <?php endforeach ?>
+            </tr>
             <?php endforeach; ?>
         </table>
     </div>
@@ -45,10 +49,12 @@ function get_hasil_bobot($data)
 }
 $hasil_bobot = get_hasil_bobot($data);
 ?>
-            
+
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <center><h3 class="panel-title">Hasil Pembobotan</h3></center>
+        <center>
+            <h3 class="panel-title">Hasil Pembobotan</h3>
+        </center>
     </div>
     <div class="table-responsive">
         <table class="table table-bordered table-hover table-striped">
@@ -64,24 +70,24 @@ $hasil_bobot = get_hasil_bobot($data);
                     <th rowspan="2">Kode</th>
                     <th rowspan="2">Nama Alternatif</th>
                     <?php foreach ($KRITERIA as $key => $val) : ?>
-                        <th><?= $val ?></th>
+                    <th><?= $val ?></th>
                     <?php endforeach ?>
                 </tr>
                 <tr>
                     <?php foreach ($rata as $key => $val) : ?>
-                        <th><?= round($val, 4) ?></th>
+                    <th><?= round($val, 4) ?></th>
                     <?php endforeach ?>
                 </tr>
             </thead>
             <?php
             foreach ($hasil_bobot as $key => $val) : ?>
-                <tr>
-                    <td><?= $key ?></td>
-                    <td><?= $ALTERNATIF[$key] ?></td>
-                    <?php foreach ($val as $k => $v) : ?>
-                        <td><?= round($v, 3) ?></td>
-                    <?php endforeach ?>
-                </tr>
+            <tr>
+                <td><?= $key ?></td>
+                <td><?= $ALTERNATIF[$key] ?></td>
+                <?php foreach ($val as $k => $v) : ?>
+                <td><?= round($v, 3) ?></td>
+                <?php endforeach ?>
+            </tr>
             <?php endforeach; ?>
         </table>
     </div>
@@ -89,7 +95,9 @@ $hasil_bobot = get_hasil_bobot($data);
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <center><h3 class="panel-title">Perangkingan</h3></center>
+        <center>
+            <h3 class="panel-title">Perangkingan</h3>
+        </center>
     </div>
     <div class="table-responsive">
         <table class="table table-hover table-bordered table-striped">
@@ -102,12 +110,14 @@ $hasil_bobot = get_hasil_bobot($data);
                 </tr>
             </thead>
             <?php
-            function get_total($hasil_bobot, $rata)
-            {
+            function get_total($hasil_bobot, $rata){
                 global $SUB;
                 $arr = array();
-
+                
                 foreach ($hasil_bobot as $key => $val) {
+                    if (!isset($arr[$key])) {
+                        $arr[$key] = 0; 
+                    }
                     foreach ($val as $k => $v) {
                         $arr[$key] += $v * $rata[$k];
                     }
@@ -118,12 +128,12 @@ $hasil_bobot = get_hasil_bobot($data);
             FAHP_save($total);
             $rows = $db->get_results("SELECT * FROM tb_alternatif  ORDER BY total DESC");
             foreach ($rows as $row) : ?>
-                <tr>
-                    <td><?= $row->rank ?></td>
-                    <td><?= $row->kode_alternatif ?></td>
-                    <td><?= $row->nama_alternatif ?></td>
-                    <td><?= round($row->total, 5) ?></td>
-                </tr>
+            <tr>
+                <td><?= $row->rank ?></td>
+                <td><?= $row->kode_alternatif ?></td>
+                <td><?= $row->nama_alternatif ?></td>
+                <td><?= round($row->total, 5) ?></td>
+            </tr>
             <?php endforeach ?>
         </table>
     </div>
@@ -131,19 +141,28 @@ $hasil_bobot = get_hasil_bobot($data);
         <?php
         $best = $rows[0]->kode_alternatif;
         ?>
-        <center><p>Jadi pilihan terbaik adalah <strong><?= $ALTERNATIF[$best] ?></strong> dengan nilai <strong><?= round($total[$best], 5) ?></strong></p></center>
-        <center><p><a class="btn btn-default" target="_blank" href="cetak.php?m=hitung"><span class="glyphicon glyphicon-print"></span> Cetak</a></p></center>
+        <center>
+            <p>Jadi pilihan terbaik adalah <strong><?= $ALTERNATIF[$best] ?></strong> dengan nilai
+                <strong><?= round($total[$best], 5) ?></strong>
+            </p>
+        </center>
+        <center>
+            <p><a class="btn btn-default" target="_blank" href="cetak.php?m=hitung"><span
+                        class="glyphicon glyphicon-print"></span> Cetak</a></p>
+        </center>
     </div>
 </div>
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <center><h3 class="panel-title">Grafik</h3></center>
+        <center>
+            <h3 class="panel-title">Grafik</h3>
+        </center>
     </div>
     <div class="panel-body">
         <style>
-            .highcharts-credits {
-                display: none;
-            }
+        .highcharts-credits {
+            display: none;
+        }
         </style>
         <?php
         function get_chart1()
@@ -199,9 +218,9 @@ $hasil_bobot = get_hasil_bobot($data);
 
         ?>
         <script>
-            $(function() {
-                $('#chart1').highcharts(<?= json_encode(get_chart1()) ?>);
-            })
+        $(function() {
+            $('#chart1').highcharts(<?= json_encode(get_chart1()) ?>);
+        })
         </script>
         <div id="chart1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     </div>

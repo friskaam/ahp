@@ -70,12 +70,14 @@ function get_relkriteria()
 function get_rel_alternatif($kriteria = '')
 {
     global $db;
+    $q = isset($_GET['q']) ? $_GET['q'] : '';
+    
     $rows = $db->get_results("SELECT
        a.kode_alternatif, ra.kode_kriteria, s.kode_sub                	            
        FROM tb_rel_alternatif ra 
        INNER JOIN tb_alternatif a ON a.kode_alternatif = ra.kode_alternatif
        LEFT JOIN tb_sub s ON s.kode_sub=ra.kode_sub
-       WHERE nama_alternatif LIKE '%" . esc_field($_GET['q']) . "%'
+       WHERE nama_alternatif LIKE '%" . esc_field($q) . "%'
        ORDER BY kode_alternatif, ra.kode_kriteria");
     $arr = array();
     foreach ($rows as $row) {
@@ -155,11 +157,15 @@ function get_baris_total($matriks = array())
     $total = array();
     foreach ($matriks as $key => $value) {
         foreach ($value as $k => $v) {
+            if (!isset($total[$k])) {
+                $total[$k] = 0; 
+            }
             $total[$k] += $v;
         }
     }
     return $total;
 }
+
 
 function normalize($matriks = array(), $total = array())
 {
@@ -195,6 +201,7 @@ function mmult($matriks = array(), $rata = array())
 function consistency_measure($matriks, $rata)
 {
     $matriks = mmult($matriks, $rata);
+    $data = [];
     foreach ($matriks as $key => $value) {
         $data[$key] = array_sum($value) / $rata[$key];
     }

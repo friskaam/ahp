@@ -38,7 +38,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : '';
                 </tr>
             </thead>
             <?php
-            $q = esc_field($_GET['q']);
+            $q = esc_field(isset($_GET['q']) ? $_GET['q'] : '');
             $rows = $db->get_results("SELECT * FROM tb_kriteria WHERE nama_kriteria LIKE '%$q%' ORDER BY kode_kriteria");
             $no = 0;
             foreach ($rows as $row) : ?>

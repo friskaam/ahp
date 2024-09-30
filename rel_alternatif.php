@@ -6,7 +6,9 @@
         <form class="form-inline">
             <input type="hidden" name="m" value="rel_alternatif" />
             <div class="form-group">
-                <input class="form-control" type="text" name="q" value="<?= $_GET['q'] ?>" placeholder="Pencarian..." />
+                <input class="form-control" type="text" name="q"
+                    value="<?= isset($_GET['q']) ? htmlspecialchars($_GET['q'], ENT_QUOTES) : '' ?>"
+                    placeholder="Pencarian..." />
             </div>
             <div class="form-group">
                 <button class="btn btn-success"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
@@ -20,7 +22,7 @@
                     <th>Kode</th>
                     <th>Nama Alternatif</th>
                     <?php foreach ($KRITERIA as $key => $val) : ?>
-                        <th><?= $val ?></th>
+                    <th><?= $val ?></th>
                     <?php endforeach ?>
                     <th>Aksi</th>
                 </tr>
@@ -29,16 +31,17 @@
             $data = get_rel_alternatif();
             $no = 0;
             foreach ($data as $key => $val) : ?>
-                <tr>
-                    <td><?= $key ?></td>
-                    <td><?= $ALTERNATIF[$key] ?></td>
-                    <?php foreach ($val as $k => $v) : ?>
-                        <td><?= $SUB[$v]['nama'] ?></td>
-                    <?php endforeach ?>
-                    <td>
-                        <a class="btn btn-xs btn-warning" href="?m=rel_alternatif_ubah&ID=<?= $key ?>"><span class="glyphicon glyphicon-edit"></span> Ubah</a>
-                    </td>
-                </tr>
+            <tr>
+                <td><?= $key ?></td>
+                <td><?= $ALTERNATIF[$key] ?></td>
+                <?php foreach ($val as $k => $v) : ?>
+                <td><?= $SUB[$v]['nama'] ?></td>
+                <?php endforeach ?>
+                <td>
+                    <a class="btn btn-xs btn-warning" href="?m=rel_alternatif_ubah&ID=<?= $key ?>"><span
+                            class="glyphicon glyphicon-edit"></span> Ubah</a>
+                </td>
+            </tr>
             <?php endforeach ?>
         </table>
     </div>

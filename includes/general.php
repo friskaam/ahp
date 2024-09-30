@@ -2,7 +2,7 @@
 
 function esc_field($str)
 {
-    return addslashes($str);
+    return $str !== null ? addslashes($str) : '';
 }
 
 function get_option($option_name)
