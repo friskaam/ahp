@@ -1,0 +1,1 @@
+ubah file config.php.example menjadi config.php lalu isi dengan konfigurasi database anda.
