@@ -10,19 +10,19 @@
         </tr>
     </thead>
     <?php
-    $q = esc_field($_GET['q']);
+    $q = esc_field(isset($_GET['q']) ? $_GET['q'] : '');
     $rows = $db->get_results("SELECT * FROM tb_alternatif 
         WHERE kode_alternatif LIKE '%$q%' 
         OR nama_alternatif LIKE '%$q%'
         ORDER BY rank");
     $no = 0;
     foreach ($rows as $row) : ?>
-        <tr>
-            <td><?= ++$no ?></td>
-            <td><?= $row->kode_alternatif ?></td>
-            <td><?= $row->nama_alternatif ?></td>
-            <td><?= round($row->total, 4) ?></td>
-            <td><?= $row->rank ?></td>
-        </tr>
+    <tr>
+        <td><?= ++$no ?></td>
+        <td><?= $row->kode_alternatif ?></td>
+        <td><?= $row->nama_alternatif ?></td>
+        <td><?= round($row->total, 4) ?></td>
+        <td><?= $row->rank ?></td>
+    </tr>
     <?php endforeach ?>
 </table>
