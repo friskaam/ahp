@@ -16,7 +16,7 @@
     <div class="panel-body">
         <?php
         if ($_POST) include 'aksi.php';
-        $kode_kriteria = $db->escape_string($_GET['kode_kriteria']);
+        $kode_kriteria = isset($_GET['kode_kriteria']) ? $db->escape_string($_GET['kode_kriteria']) : '';
         $rows = $db->get_results("SELECT r.ID1, r.ID2, nilai 
             FROM tb_rel_sub r 
             INNER JOIN tb_sub s1 ON s1.kode_sub=r.ID1
